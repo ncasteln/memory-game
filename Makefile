@@ -75,7 +75,8 @@ clean-img: clean-cont
 		echo "$(N)* No image to remove$(W)"; \
 	fi
 
-fclean: stop clean-img
+# ADD A CONFIRM RULE!
+# fclean: stop clean-img
 
 display:
 	@echo "$(B)------------------------ IMAGES ------------------------$(W)";
