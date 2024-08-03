@@ -1,6 +1,6 @@
-import typescriptLogo from './typescript.svg'
-import viteLogo from '/vite.svg'
-import { setupCounter } from './counter.ts'
+// import typescriptLogo from './typescript.svg'
+// import viteLogo from '/vite.svg'
+// import { setupCounter } from './counter.ts'
 
 import './style.css'
 import { Game } from './Game.ts'
@@ -17,8 +17,6 @@ function init() {
 	game.getCards().forEach((card) => {
 		app.appendChild(card.getDOMcard());
 	})
-
-	// renderGrid(game.getCards()); // separate logic from grphic
 	// game.initGame();
 	// game.end();
 }

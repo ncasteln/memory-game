@@ -1,33 +1,29 @@
 export class Card {
 	#id: number;
 	#imgPath: string;
-	_DOMcard: HTMLDivElement;
+	#DOMcard: HTMLDivElement;
 	#DOMimg: HTMLImageElement;
+	#isSelected: boolean;
 
 	constructor(id: number) {
 		this.#id = id;
 		this.#imgPath = `img-${id}.jpg`;
 
 		// <div> member
-		this._DOMcard = document.createElement("div");
-		this._DOMcard.classList.add("card");
+		this.#DOMcard = document.createElement("div");
+		this.#DOMcard.classList.add("card");
+		this.#isSelected = false;
 
 		// <img> member
 		this.#DOMimg = document.createElement("img");
 		this.#DOMimg.setAttribute("src", this.#imgPath);
 		this.#DOMimg.setAttribute("alt", this.#imgPath); // fix description
-		this._DOMcard.appendChild(this.#DOMimg);
-
-		// not appended to the body yet
-
-		// listeners
-		this.handleClick = this.handleClick.bind(this);
-		this._DOMcard.addEventListener("click", this.handleClick);
+		this.#DOMcard.appendChild(this.#DOMimg);
 	}
 
-	handleClick() {
-		console.log(this.#id + " clicked!");
-	}
 
-	getDOMcard(): HTMLDivElement { return (this._DOMcard) };
+	getId(): number { return (this.#id) };
+	getDOMcard(): HTMLDivElement { return (this.#DOMcard) };
+
+	toggleIsSelected(): void { this.#isSelected = !this.#isSelected; };
 }
