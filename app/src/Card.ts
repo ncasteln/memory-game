@@ -1,6 +1,7 @@
 export class Card {
 	#id: number;
 	#imgPath: string;
+	#retroImg: string;
 	#DOMcard: HTMLDivElement;
 	#DOMimg: HTMLImageElement;
 	#isSelected: boolean;
@@ -9,6 +10,7 @@ export class Card {
 	constructor(id: number, imgId: number) {
 		this.#id = id;
 		this.#imgPath = `img-${imgId}.jpg`;
+		this.#retroImg = `retro.jpg`
 
 		// <div> member
 		this.#DOMcard = document.createElement("div");
@@ -18,7 +20,7 @@ export class Card {
 
 		// <img> member
 		this.#DOMimg = document.createElement("img");
-		this.#DOMimg.setAttribute("src", this.#imgPath);
+		this.#DOMimg.setAttribute("src", this.#retroImg);
 		this.#DOMimg.setAttribute("alt", this.#imgPath); // fix description
 		this.#DOMcard.appendChild(this.#DOMimg);
 	}
@@ -31,12 +33,13 @@ export class Card {
 
 	toggleIsSelected(): void {
 		this.#isSelected = !this.#isSelected;
-		this.#DOMimg.classList.remove("selected");
-		if (this.#isSelected)
-			this.#DOMimg.classList.add("selected");
+		if (this.#isSelected) {
+			this.#DOMimg.setAttribute("src", this.#imgPath);
+		} else {
+			this.#DOMimg.setAttribute("src", this.#retroImg);
+		}
 	};
-	disable(): void {
-		this.#isEnabled = false;
-		this.#DOMimg.classList.add("disable")
-	};
+
+
+	disable(): void { this.#isEnabled = false; };
 }

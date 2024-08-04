@@ -4,11 +4,13 @@ export class Game {
 	#cardNumber: number;
 	#cards: Card[];
 	#selectedCards: [Card|null, Card|null];
+	#needToWait: boolean;
 
 	constructor(cardNumber: number) {
 		this.#cardNumber = cardNumber;
 		this.#cards = this.initCards();
 		this.#selectedCards = [null, null];
+		this.#needToWait = false;
 	}
 
 	initCards(): Card[] {
@@ -29,11 +31,12 @@ export class Game {
 			return (card.getId() === i);
 		})
 		if (card) {
-			if (card.isEnabled()) {
+			if (card.isEnabled() && !this.#needToWait) {
 				console.log("Clicked: ", card.getId(), card.getImgPath());
 				this.updateSelectedCards(card);
-				if (this.#selectedCards[0] && this.#selectedCards[1])
+				if (this.#selectedCards[0] && this.#selectedCards[1]) {
 					this.checkMatch();
+				}
 			}
 		}
 	}
@@ -57,19 +60,22 @@ export class Game {
 
 	checkMatch() {
 		if (this.#selectedCards[0]?.getImgPath() === this.#selectedCards[1]?.getImgPath()) {
-			console.log(" MATCH! ");
 			this.#selectedCards[0]?.disable();
 			this.#selectedCards[1]?.disable();
+			this.clearSelected();
 		}
 		else {
-			console.log(" NOT MATCHED ");
+			this.#needToWait = true;
+			setTimeout(() => {
+				this.#selectedCards[0]?.toggleIsSelected();
+				this.#selectedCards[1]?.toggleIsSelected();
+				this.clearSelected();
+				this.#needToWait = false;
+			}, 1000);
 		}
-		this.clearSelected();
 	}
 
 	clearSelected() {
-		this.#selectedCards[0]!.toggleIsSelected();
-		this.#selectedCards[1]!.toggleIsSelected();
 		this.#selectedCards[0] = null;
 		this.#selectedCards[1] = null;
 	}
