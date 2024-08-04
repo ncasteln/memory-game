@@ -13,10 +13,7 @@ document.addEventListener("DOMContentLoaded", init);
 
 function init() {
 	const game = new Game(CARD_NUMBER);
-
 	game.getCards().forEach((card) => {
 		app.appendChild(card.getDOMcard());
 	})
-	// game.initGame();
-	// game.end();
 }

@@ -29,7 +29,7 @@ export class Game {
 			return (card.getId() === i);
 		})
 		if (card) {
-			if (card.getIsSelectable()) {
+			if (card.isEnabled()) {
 				console.log("Clicked: ", card.getId(), card.getImgPath());
 				this.updateSelectedCards(card);
 				if (this.#selectedCards[0] && this.#selectedCards[1])
@@ -39,7 +39,6 @@ export class Game {
 	}
 
 	getCards(): Card[] { return (this.#cards) };
-	displaySelectedCards(): void { console.log(this.#selectedCards); };
 
 	updateSelectedCards(currentClickedCard: Card): void {
 		const first = this.#selectedCards[0];
@@ -59,8 +58,8 @@ export class Game {
 	checkMatch() {
 		if (this.#selectedCards[0]?.getImgPath() === this.#selectedCards[1]?.getImgPath()) {
 			console.log(" MATCH! ");
-			this.#selectedCards[0]?.setIsSelectable();
-			this.#selectedCards[1]?.setIsSelectable();
+			this.#selectedCards[0]?.disable();
+			this.#selectedCards[1]?.disable();
 		}
 		else {
 			console.log(" NOT MATCHED ");
@@ -69,6 +68,8 @@ export class Game {
 	}
 
 	clearSelected() {
+		this.#selectedCards[0]!.toggleIsSelected();
+		this.#selectedCards[1]!.toggleIsSelected();
 		this.#selectedCards[0] = null;
 		this.#selectedCards[1] = null;
 	}
