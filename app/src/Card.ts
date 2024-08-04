@@ -4,15 +4,17 @@ export class Card {
 	#DOMcard: HTMLDivElement;
 	#DOMimg: HTMLImageElement;
 	#isSelected: boolean;
+	#isSelectable: boolean;
 
-	constructor(id: number) {
+	constructor(id: number, imgId: number) {
 		this.#id = id;
-		this.#imgPath = `img-${id}.jpg`;
+		this.#imgPath = `img-${imgId}.jpg`;
 
 		// <div> member
 		this.#DOMcard = document.createElement("div");
 		this.#DOMcard.classList.add("card");
 		this.#isSelected = false;
+		this.#isSelectable = true;
 
 		// <img> member
 		this.#DOMimg = document.createElement("img");
@@ -23,7 +25,10 @@ export class Card {
 
 
 	getId(): number { return (this.#id) };
+	getImgPath(): string { return (this.#imgPath) };
 	getDOMcard(): HTMLDivElement { return (this.#DOMcard) };
+	getIsSelectable(): boolean { return (this.#isSelectable) };
 
 	toggleIsSelected(): void { this.#isSelected = !this.#isSelected; };
+	setIsSelectable(): void { this.#isSelectable = false };
 }
