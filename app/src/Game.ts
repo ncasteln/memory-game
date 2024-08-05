@@ -26,6 +26,17 @@ export class Game {
 		return (cards)
 	}
 
+	shuffle(): void {
+		let i = this.#cards.length;
+		let randomIndex;
+
+		while (i != 0) {
+			randomIndex = Math.floor(Math.random() * i);
+			i--;
+			[this.#cards[i], this.#cards[randomIndex]] = [this.#cards[randomIndex], this.#cards[i]]; // https://javascript.info/destructuring-assignment
+		}
+	}
+
 	handleClick(e: Event, i: number): void {
 		const card = this.#cards.find((card) => {
 			return (card.getId() === i);

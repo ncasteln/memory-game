@@ -14,12 +14,13 @@ export class Card {
 
 		// <div> member
 		this.#DOMcard = document.createElement("div");
-		this.#DOMcard.classList.add("card");
+		this.#DOMcard.classList.add("card", "back");
 		this.#isSelected = false;
 		this.#isEnabled = true;
 
 		// <img> member
 		this.#DOMimg = document.createElement("img");
+		this.#DOMimg.classList.add("card", "front");
 		this.#DOMimg.setAttribute("src", this.#retroImg);
 		this.#DOMimg.setAttribute("alt", this.#imgPath); // fix description
 		this.#DOMcard.appendChild(this.#DOMimg);
