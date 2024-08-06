@@ -41,6 +41,5 @@ export class Card {
 		}
 	};
 
-
 	disable(): void { this.#isEnabled = false; };
 }

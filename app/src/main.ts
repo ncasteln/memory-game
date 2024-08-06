@@ -12,9 +12,18 @@ const app = document.getElementById("app") as HTMLDivElement;
 document.addEventListener("DOMContentLoaded", init);
 
 function init() {
-	const game = new Game(CARD_NUMBER);
+	const restartButton = document.getElementById("restart-button");
+	if (restartButton)
+		app.removeChild(restartButton);
+	const game = new Game(CARD_NUMBER, () => showRestartButton()); // register the call back
 	game.shuffle();
-	game.getCards().forEach((card) => {
-		app.appendChild(card.getDOMcard());
-	})
+	game.getCards().forEach((card) => { app.appendChild(card.getDOMcard()); })
+}
+
+function showRestartButton() {
+	const restartButton = document.createElement('button');
+	restartButton.textContent = 'Restart Game';
+	restartButton.id = "restart-button";
+	restartButton.addEventListener('click', init);
+	app.appendChild(restartButton);
 }

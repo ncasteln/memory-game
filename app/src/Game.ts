@@ -5,12 +5,14 @@ export class Game {
 	#cards: Card[];
 	#selectedCards: [Card|null, Card|null];
 	#needToWait: boolean;
+	#onEndGame: CallableFunction;
 
-	constructor(cardNumber: number) {
+	constructor(cardNumber: number, showRestartButtonCallback: CallableFunction) {
 		this.#cardNumber = cardNumber;
 		this.#cards = this.initCards();
 		this.#selectedCards = [null, null];
 		this.#needToWait = false;
+		this.#onEndGame = showRestartButtonCallback;
 	}
 
 	initCards(): Card[] {
@@ -45,14 +47,12 @@ export class Game {
 			if (card.isEnabled() && !this.#needToWait) {
 				console.log("Clicked: ", card.getId(), card.getImgPath());
 				this.updateSelectedCards(card);
-				if (this.#selectedCards[0] && this.#selectedCards[1]) {
+				if (this.#selectedCards[0] && this.#selectedCards[1])
 					this.checkMatch();
-				}
+				this.checkEndGame();
 			}
 		}
 	}
-
-	getCards(): Card[] { return (this.#cards) };
 
 	updateSelectedCards(currentClickedCard: Card): void {
 		const first = this.#selectedCards[0];
@@ -74,6 +74,7 @@ export class Game {
 			this.#selectedCards[0]?.disable();
 			this.#selectedCards[1]?.disable();
 			this.clearSelected();
+			this.#cardNumber--; // change
 		}
 		else {
 			this.#needToWait = true;
@@ -86,8 +87,21 @@ export class Game {
 		}
 	}
 
+	checkEndGame(): void {
+		if (this.#cardNumber === 0) { // end game
+			const app = document.getElementById("app");
+			this.#cards.forEach(card => {
+				app?.removeChild(card.getDOMcard());
+			});
+			this.#onEndGame();
+		}
+	}
+
 	clearSelected() {
 		this.#selectedCards[0] = null;
 		this.#selectedCards[1] = null;
 	}
+
+	getCards(): Card[] { return (this.#cards) };
+	getCardNumber(): number { return (this.#cardNumber) };
 }
