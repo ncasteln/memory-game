@@ -77,7 +77,7 @@ export class Game {
 	}
 
 	checkMatch() {
-		if (this.#selectedCards[0]?.getImgPath() === this.#selectedCards[1]?.getImgPath()) {
+		if (this.#selectedCards[0]?.getFront().getPath() === this.#selectedCards[1]?.getFront().getPath()) {
 			this.#selectedCards[0]?.disable();
 			this.#selectedCards[1]?.disable();
 			this.clearSelectedCards();

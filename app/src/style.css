@@ -67,8 +67,12 @@ body {
 	justify-content: center;
 	align-items: center;
 
-	background: linear-gradient(-45deg, rgb(255, 255, 255),rgb(91, 168, 255)), rgb(3, 79, 172);
-	animation: shading 5s ease infinite;
+	background: linear-gradient(-45deg,
+		rgb(5, 59, 124),
+		rgb(3, 79, 172),
+		rgb(91, 168, 255),
+		rgb(255, 255, 255));
+	animation: shading 15s ease infinite;
 	background-size: 400%;
 }
 
@@ -80,7 +84,7 @@ body {
 
 #app {
 	width: 100%;
-	max-width: 960px;
+	height: 100%;
 	display: grid;
 	gap: 1rem;
 	grid-template-columns: repeat(4, 1fr);
@@ -101,9 +105,8 @@ body {
 */
 .card {
 	position: relative;
-	width: 100%;
-	max-width: 150px;
-	min-height: 200px;
+	width: 150px;
+	height: 200px;
 }
 
 /* .card .other	:	matches '.other' nested in '.card' */
@@ -118,7 +121,7 @@ img {
 	transition: transform 0.5s ease;
 	-webkit-backface-visibility: hidden;
 	backface-visibility: hidden;
-	object-fit: cover;
+	object-fit: fill;
 }
 
 .front {

@@ -6,7 +6,10 @@ Goal of this project is to create a simple memory-game, in which the player has 
 ### CSS image sizing and responsivness
 
 ### JavaScript classes
+I tried to encapsulate as much element as possible inside the classes: `Game` which holds the game logic. The `Game` holds an array of `Card` instances, and each of it holds an `Image` instance. A performance improvement could be done by not creating the event listener function for each Card instance, but share the same method.
 
 ### Creation of a state handling
+The game state is handled inside the `Game` class. To let the game restart a callback function is registered at the creatino of the `Game` instance and called when the game ends.
 
 ### TypeScript
+Using TypeScript in a small project like this doesn't show too many benefits, but it is still very useful to catch some little bug related to type checking and return values.

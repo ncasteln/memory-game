@@ -1,56 +1,37 @@
+import { Image } from "./Image";
+
 export class Card {
 	#id: number;
-	#frontImgPath: string;
-	#backImgPath: string;
 	#DOMcard: HTMLDivElement;
-	#DOMback: HTMLDivElement;
-	#DOMbackImg: HTMLImageElement
-	#DOMfront: HTMLDivElement;
-	#DOMfrontImg: HTMLImageElement
 	#isSelected: boolean;
 	#isEnabled: boolean;
+	#frontImage: Image;
+	#backImage: Image;
 
 	constructor(id: number, imgId: number) {
 		this.#id = id;
-		this.#frontImgPath = `img-${imgId}.jpg`;
-		this.#backImgPath = `retro.jpg`
 		this.#isSelected = false;
 		this.#isEnabled = true;
+		this.#frontImage = new Image(`img-${imgId}.jpg`, "front");
+		this.#backImage = new Image(`retro.jpg`, "back");
 
-		// .card
 		this.#DOMcard = document.createElement("div");
 		this.#DOMcard.classList.add("card");
-
-		// .back
-		this.#DOMback = document.createElement("div");
-		this.#DOMback.classList.add("back");
-		this.#DOMbackImg = document.createElement("img");
-		this.#DOMbackImg.classList.add("backImg");
-		this.#DOMbackImg.setAttribute("src", this.#backImgPath);
-
-		// .front
-		this.#DOMfront = document.createElement("div");
-		this.#DOMfront.classList.add("front");
-		this.#DOMfrontImg = document.createElement("img");
-		this.#DOMfrontImg.classList.add("frontImg");
-		this.#DOMfrontImg.setAttribute("src", this.#frontImgPath);
-
-		this.#DOMback.appendChild(this.#DOMbackImg);
-		this.#DOMfront.appendChild(this.#DOMfrontImg);
-		this.#DOMcard.appendChild(this.#DOMback);
-		this.#DOMcard.appendChild(this.#DOMfront);
+		this.#DOMcard.appendChild(this.#backImage.getDOMdiv());
+		this.#DOMcard.appendChild(this.#frontImage.getDOMdiv());
 	}
 
 
 	getId(): number { return (this.#id) };
-	getImgPath(): string { return (this.#frontImgPath) };
 	getDOMcard(): HTMLDivElement { return (this.#DOMcard) };
+	getFront(): Image { return (this.#frontImage) };
+	getBack(): Image { return (this.#backImage) };
 	isEnabled(): boolean { return (this.#isEnabled) };
 
 	toggleIsSelected(): void {
 		this.#isSelected = !this.#isSelected;
-		this.#DOMfront.classList.toggle("flipped");
-		this.#DOMback.classList.toggle("flipped");
+		this.getFront().getDOMdiv().classList.toggle("flipped");
+		this.getBack().getDOMdiv().classList.toggle("flipped");
 	};
 
 	disable(): void { this.#isEnabled = false; };
