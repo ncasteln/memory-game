@@ -66,11 +66,21 @@ body {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	background-color: greenyellow;
+
+	background: linear-gradient(-45deg, rgb(255, 255, 255),rgb(91, 168, 255)), rgb(3, 79, 172);
+	animation: shading 5s ease infinite;
+	background-size: 400%;
+}
+
+@keyframes shading {
+	0% { background-position: 0% 50%; }
+	50% { background-position: 100% 50%; }
+	100% { background-position: 0% 50%; }
 }
 
 #app {
 	width: 100%;
+	max-width: 960px;
 	display: grid;
 	gap: 1rem;
 	grid-template-columns: repeat(4, 1fr);
@@ -79,18 +89,48 @@ body {
 }
 
 /* https://vanslaars.io/articles/create-a-card-flip-animation-with-css */
-.card .back {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	/* width: 70px;
-	height: 70px; */
+/*	CARD STRUCTURE
+	<div class="card">
+		<div class="back">
+			<img class="backImg" src="retro.jpg">
+		</div>
+		<div class="front">
+			<img class="frontImg" src="img-3.jpg">
+		</div>
+	</div>
+*/
+.card {
+	position: relative;
+	width: 100%;
+	max-width: 150px;
+	min-height: 200px;
 }
+
 /* .card .other	:	matches '.other' nested in '.card' */
-/* .card.other 	:	matches class name like 'card other' */
-.card .front {
+/* .card.other 	:	matches el with both class name 'card' and 'other' */
+.card .back,
+.card .front,
+img {
+	position: absolute;
 	width: 100%;
 	height: 100%;
+	box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+	transition: transform 0.5s ease;
+	-webkit-backface-visibility: hidden;
+	backface-visibility: hidden;
 	object-fit: cover;
+}
+
+.front {
 	transform: perspective(600px) rotateY(180deg);
+}
+.front.flipped {
+	transform: perspective(600px) rotateY(0deg);
+}
+
+.back {
+	transform: perspective(600px) rotateY(0deg);
+}
+.back.flipped {
+	transform: perspective(600px) rotateY(-180deg);
 }

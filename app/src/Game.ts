@@ -20,8 +20,8 @@ export class Game {
 		for (let i = 0; i < this.#cardNumber; i++) {
 			const card0 = new Card(i, i);
 			const card1 = new Card(i+10, i);
-			card0.getDOMcard().addEventListener("click", (e) => this.handleClick(e, i));
-			card1.getDOMcard().addEventListener("click", (e) => this.handleClick(e, i+10));
+			card0.getDOMcard().addEventListener("click", () => this.handleClick(i));
+			card1.getDOMcard().addEventListener("click", () => this.handleClick(i+10));
 			cards.push(card0);
 			cards.push(card1);
 		}
@@ -39,17 +39,24 @@ export class Game {
 		}
 	}
 
-	handleClick(e: Event, i: number): void {
+	createTable(): void {
+		const app = document.getElementById("app");
+		this.#cards.forEach((card) => { app!.appendChild(card.getDOMcard()); });
+	}
+
+	handleClick(i: number): void {
 		const card = this.#cards.find((card) => {
 			return (card.getId() === i);
-		})
+		});
 		if (card) {
 			if (card.isEnabled() && !this.#needToWait) {
-				console.log("Clicked: ", card.getId(), card.getImgPath());
 				this.updateSelectedCards(card);
 				if (this.#selectedCards[0] && this.#selectedCards[1])
 					this.checkMatch();
-				this.checkEndGame();
+				if (this.isEndGame()) {
+					this.clearDOM()
+					this.#onEndGame();
+				}
 			}
 		}
 	}
@@ -73,35 +80,33 @@ export class Game {
 		if (this.#selectedCards[0]?.getImgPath() === this.#selectedCards[1]?.getImgPath()) {
 			this.#selectedCards[0]?.disable();
 			this.#selectedCards[1]?.disable();
-			this.clearSelected();
-			this.#cardNumber--; // change
+			this.clearSelectedCards();
+			this.#cardNumber--;
 		}
 		else {
 			this.#needToWait = true;
 			setTimeout(() => {
 				this.#selectedCards[0]?.toggleIsSelected();
 				this.#selectedCards[1]?.toggleIsSelected();
-				this.clearSelected();
+				this.clearSelectedCards();
 				this.#needToWait = false;
 			}, 1000);
 		}
 	}
 
-	checkEndGame(): void {
-		if (this.#cardNumber === 0) { // end game
-			const app = document.getElementById("app");
-			this.#cards.forEach(card => {
-				app?.removeChild(card.getDOMcard());
-			});
-			this.#onEndGame();
-		}
+	clearDOM(): void {
+		const app = document.getElementById("app");
+		this.#cards.forEach(card => {
+			app?.removeChild(card.getDOMcard());
+		});
 	}
 
-	clearSelected() {
+	clearSelectedCards() {
 		this.#selectedCards[0] = null;
 		this.#selectedCards[1] = null;
 	}
 
 	getCards(): Card[] { return (this.#cards) };
 	getCardNumber(): number { return (this.#cardNumber) };
+	isEndGame(): boolean { return (this.#cardNumber != 0 ? false : true) }
 }

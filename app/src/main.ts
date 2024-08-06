@@ -1,11 +1,5 @@
-// import typescriptLogo from './typescript.svg'
-// import viteLogo from '/vite.svg'
-// import { setupCounter } from './counter.ts'
-
 import './style.css'
 import { Game } from './Game.ts'
-
-// setupCounter(document.querySelector<HTMLButtonElement>('#counter')!)
 
 const CARD_NUMBER = 10
 const app = document.getElementById("app") as HTMLDivElement;
@@ -17,7 +11,7 @@ function init() {
 		app.removeChild(restartButton);
 	const game = new Game(CARD_NUMBER, () => showRestartButton()); // register the call back
 	game.shuffle();
-	game.getCards().forEach((card) => { app.appendChild(card.getDOMcard()); })
+	game.createTable();
 }
 
 function showRestartButton() {
