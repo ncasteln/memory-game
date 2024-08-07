@@ -49,7 +49,7 @@ table {
 
 /* CUSTOMS */
 * {
-	outline: 1px solid black;
+	/* outline: 1px solid black; */
 	box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
@@ -83,13 +83,21 @@ body {
 }
 
 #app {
-	width: 100%;
+	width: 100%;		/* The container is large the whole body but... */
 	height: 100%;
-	display: grid;
+	max-width: 960px;	/* has a limit for big screens */
+	max-height: 760px;	/* has a limit for big screens */ /* ------- The solution relies or by giving the size to card or to the container! */
+	display: flex;
+	flex-wrap: wrap;
 	gap: 1rem;
-	grid-template-columns: repeat(4, 1fr);
-	grid-template-rows: repeat(5, 1fr);
-	justify-items: center;
+	justify-content: space-between;
+
+	/* No width set: depends on the size of the images */
+	/* display: grid;
+	gap: 1rem;
+	grid-template-columns: repeat(5, 1fr);
+	grid-template-rows: repeat(4, 1fr);
+	justify-items: center; */
 }
 
 /* https://vanslaars.io/articles/create-a-card-flip-animation-with-css */
@@ -105,8 +113,16 @@ body {
 */
 .card {
 	position: relative;
-	width: 150px;
-	height: 200px;
+
+	width: 20%;	/* Each card is larg 20% of the container */
+	/* min-width: 67px; */ /* ------> ??????????? */
+	/* min-height: 96px; */
+	filter: drop-shadow(1px 1px 5px #333333);
+	/* height: 10%;	 */
+
+	/* width: 100px;
+	height: 150px; */
+
 }
 
 /* .card .other	:	matches '.other' nested in '.card' */
@@ -117,11 +133,10 @@ img {
 	position: absolute;
 	width: 100%;
 	height: 100%;
-	box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 	transition: transform 0.5s ease;
 	-webkit-backface-visibility: hidden;
 	backface-visibility: hidden;
-	object-fit: fill;
+	object-fit: contain;
 }
 
 .front {
@@ -137,3 +152,69 @@ img {
 .back.flipped {
 	transform: perspective(600px) rotateY(-180deg);
 }
+
+
+/*
+CARD STRUCTURE
+<div class="card">
+	<div class="back">
+		<img class="backImg" src="retro.jpg">
+	</div>
+	<div class="front">
+		<img class="frontImg" src="img-3.jpg">
+	</div>
+</div>
+
+With this structure I could obtain responsive with just 2 small problem:
+- visible with outline: sine the card occupies 20% and the image is not distorted in tis proportion,
+then the card will be enlarged. If I want to apply a shadow I can only do it using
+filter().
+- Click area
+
+#app {
+	App occupies the whole body, plus cannot expand over a certain limit.
+	width: 100%;
+	height: 100%;
+	max-width: 960px;
+	max-height: 760px;
+
+	The items are distributed and expanded in the available space
+	display: flex;
+	flex-wrap: wrap;
+	gap: 1rem;
+	justify-content: space-between;
+}
+.card {
+	position: relative;
+
+	Each card is large 20% of the #app (the limit it set by the container)
+	width: 20%;
+}
+.card .back,
+.card .front,
+img {
+	position: absolute;
+
+	The image occupies the whole space of its parent, the card, and the behavior
+	in relation with it is to not distort the image but maintain the proportions.
+	width: 100%;
+	height: 100%;
+	object-fit: contain;
+
+	transition: transform 0.5s ease;
+	-webkit-backface-visibility: hidden;
+	backface-visibility: hidden;
+}
+*/
+
+
+/*
+CARD STRUCTURE I WANT TO TRY
+<div class="card">
+	<img class="backImg" src="retro.jpg">
+	<img class="frontImg" src="img-3.jpg">
+</div>
+
+Does it changes something, by maybe set object-fit: fill|cover|contain; ?
+
+*/

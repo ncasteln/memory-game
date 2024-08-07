@@ -21,7 +21,6 @@ export class Card {
 		this.#DOMcard.appendChild(this.#frontImage.getDOMdiv());
 	}
 
-
 	getId(): number { return (this.#id) };
 	getDOMcard(): HTMLDivElement { return (this.#DOMcard) };
 	getFront(): Image { return (this.#frontImage) };

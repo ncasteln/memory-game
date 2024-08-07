@@ -67,6 +67,7 @@ clean-cont:
 		echo "$(N)* No container to remove$(W)"; \
 	fi
 
+# Change behaviore of cleanim JUST REMOVE THE CURRENT HERE!
 clean-img: clean-cont
 	@if [ $$(docker images | grep $(IMG_NAME) | wc -l) -ge 1 ]; then \
 		docker rmi -f $$(docker images -a --quiet); \
