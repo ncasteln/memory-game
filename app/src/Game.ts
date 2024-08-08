@@ -18,10 +18,11 @@ export class Game {
 	initCards(): Card[] {
 		const cards: Card[] = [];
 		for (let i = 0; i < this.#cardNumber; i++) {
-			const card0 = new Card(i, i);
-			const card1 = new Card(i+10, i);
-			card0.getDOMcard().addEventListener("click", () => this.handleClick(i));
-			card1.getDOMcard().addEventListener("click", () => this.handleClick(i+10));
+			const imgId = i;
+			const card0 = new Card(i, imgId);
+			const card1 = new Card(i + 10, imgId);
+			card0.getDOMcard().addEventListener("click", this.handleClick.bind(this, i)); // https://javascript.info/bind
+			card1.getDOMcard().addEventListener("click", this.handleClick.bind(this, i + 10)); // https://javascript.info/bind
 			cards.push(card0);
 			cards.push(card1);
 		}
@@ -44,9 +45,9 @@ export class Game {
 		this.#cards.forEach((card) => { app!.appendChild(card.getDOMcard()); });
 	}
 
-	handleClick(i: number): void {
+	handleClick(clickedId: number): void {
 		const card = this.#cards.find((card) => {
-			return (card.getId() === i);
+			return (card.getId() === clickedId);
 		});
 		if (card) {
 			if (card.isEnabled() && !this.#needToWait) {
@@ -54,8 +55,10 @@ export class Game {
 				if (this.#selectedCards[0] && this.#selectedCards[1])
 					this.checkMatch();
 				if (this.isEndGame()) {
-					this.clearDOM()
-					this.#onEndGame();
+					setTimeout(() => {
+						this.clearDOM()
+						this.#onEndGame();
+					}, 1000);
 				}
 			}
 		}

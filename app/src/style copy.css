@@ -49,7 +49,7 @@ table {
 
 /* CUSTOMS */
 * {
-	outline: 1px solid black;
+	/* outline: 1px solid black; */
 	box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
@@ -87,9 +87,17 @@ body {
 	height: 100%;
 	max-width: 960px;	/* has a limit for big screens */
 	max-height: 760px;	/* has a limit for big screens */ /* ------- The solution relies or by giving the size to card or to the container! */
-	display: grid;
-	grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));
+	display: flex;
+	flex-wrap: wrap;
 	gap: 1rem;
+	justify-content: space-between;
+
+	/* No width set: depends on the size of the images */
+	/* display: grid;
+	gap: 1rem;
+	grid-template-columns: repeat(5, 1fr);
+	grid-template-rows: repeat(4, 1fr);
+	justify-items: center; */
 }
 
 /* https://vanslaars.io/articles/create-a-card-flip-animation-with-css */
@@ -105,7 +113,16 @@ body {
 */
 .card {
 	position: relative;
+
+	width: 20%;	/* Each card is larg 20% of the container */
+	/* min-width: 67px; */ /* ------> ??????????? */
+	/* min-height: 96px; */
 	filter: drop-shadow(1px 1px 5px #333333);
+	/* height: 10%;	 */
+
+	/* width: 100px;
+	height: 150px; */
+
 }
 
 /* .card .other	:	matches '.other' nested in '.card' */
