@@ -15,7 +15,8 @@ export class Image {
 		// <img>
 		this.#DOMimg = document.createElement("img");
 		this.#DOMimg.classList.add(this.#className + "Img");
-		this.#DOMimg.setAttribute("src", this.#path)
+		this.#DOMimg.setAttribute("src", this.#path);
+		this.#DOMimg.setAttribute("alt", `Bird Card ${this.#path}`);
 		this.#DOMimg.setAttribute("draggable", "false");
 
 		this.#DOMdiv.appendChild(this.#DOMimg);

@@ -1,11 +1,6 @@
 import './style.css'
 import { Game } from './Game.ts'
 
-/*	 TO DO
-	- Grid-flex etc.
-	- button style
-*/
-
 const CARD_NUMBER = 10
 const app = document.getElementById("app") as HTMLDivElement;
 document.addEventListener("DOMContentLoaded", init);

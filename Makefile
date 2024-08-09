@@ -70,7 +70,7 @@ clean-cont:
 # Change behaviore of cleanim JUST REMOVE THE CURRENT HERE!
 clean-img: clean-cont
 	@if [ $$(docker images | grep $(IMG_NAME) | wc -l) -ge 1 ]; then \
-		docker rmi -f $$(docker images -a --quiet); \
+		docker rmi $(IMG_NAME); \
 		echo "$(G)* Image removed$(W)"; \
 	else \
 		echo "$(N)* No image to remove$(W)"; \
