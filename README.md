@@ -29,7 +29,7 @@ Using TypeScript in a small project like this doesn't show too many benefits, bu
 To achieve a responsive grid layout there are multiple approach. First, I followed a first-small-devices-approach which starts from the smallest screen we can have, that has to be resized for bigger screens. This approach is quite useful because I first make more confortable the view in a small screen with 'less' space.
 To handle the grid itself I used the property `grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));` (notice the `50px`). [This](https://www.imarketinx.de/artikel/responsive-image-gallery-with-css-grid.html) article explains about the `auto-fill` and `auto-fit` properties and how they actually work. For other media queries, the `minmax()` function should accept as first argument a bigger value.
 
-## Tri it out
+## Try it out
 The project is built iusing a simple docker container. After cloning just `make` and access it thorugh http://localhost:8080.
 ```bash
 git clone https://github.com/ncasteln/memory-game.git;
